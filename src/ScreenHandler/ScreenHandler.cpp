@@ -9,9 +9,9 @@ ScreenHandler::~ScreenHandler()
 {
 }
 
-void ScreenHandler::Init(const uint8_t pins[6], uint8_t aPin, Pair<uint8_t, uint8_t> menuDimensions)
+void ScreenHandler::Init(const uint8_t pins[6], uint8_t aPin, Pair<uint8_t, uint8_t> menuDimensions, bool **editablePositions)
 {
-    menuPosition = MenuPosition(Pair<uint8_t, uint8_t>(0, 0), menuDimensions);
+    menuPosition = MenuPositions(Pair<uint8_t, uint8_t>(0, 0), menuDimensions, editablePositions);
     actionHandler = ActionHandler(aPin);
 
     lcd = LiquidCrystal(pins[0], pins[1], pins[2], pins[3], pins[4], pins[5]);
@@ -19,19 +19,22 @@ void ScreenHandler::Init(const uint8_t pins[6], uint8_t aPin, Pair<uint8_t, uint
     lcd.clear();
 }
 
-void ScreenHandler::Update(String menuLines[3][2])
+void ScreenHandler::Update(MenuLine menuLines[3][2])
 {
     PrintMenu(menuLines);
     SetMenuPosition();
 }
 
-void ScreenHandler::PrintMenu(String menuLines[3][2])
+void ScreenHandler::PrintMenu(MenuLine menuLines[3][2])
 {
     lcd.clear();
     lcd.print(">");
-    lcd.print(menuLines[menuPosition.GetCategory()][menuPosition.GetItem()]);
+    lcd.print(menuLines[menuPosition.GetCategory()][menuPosition.GetItem()].Title);
+    lcd.print(menuLines[menuPosition.GetCategory()][menuPosition.GetItem()].StringValue());
+
     lcd.setCursor(1, 1);
-    lcd.print(menuLines[menuPosition.GetCategory()][menuPosition.GetNextItem()]);
+    lcd.print(menuLines[menuPosition.GetCategory()][menuPosition.GetNextItem()].Title);
+    lcd.print(menuLines[menuPosition.GetCategory()][menuPosition.GetNextItem()].StringValue());
 }
 
 void ScreenHandler::SetMenuPosition()
@@ -53,6 +56,7 @@ void ScreenHandler::SetMenuPosition()
         menuPosition.SetNextCategory();
         break;
     case SELECT_KEY:
+        menuPosition.ToggleEditMode();
         break;
     default:
         break;
