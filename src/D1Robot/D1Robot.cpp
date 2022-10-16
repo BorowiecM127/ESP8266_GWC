@@ -16,9 +16,9 @@ void D1Robot::Init()
     button.Init();
 }
 
-void D1Robot::UpdateScreen(String lines[2])
+void D1Robot::UpdateScreen(String lines[2], bool lineIsEdited)
 {
-    screen.Display(lines);
+    screen.Display(lines, lineIsEdited);
 }
 
 analogKey D1Robot::ReadAnalogButton()

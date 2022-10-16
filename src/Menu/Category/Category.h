@@ -23,8 +23,6 @@ public:
 
     String* GetLines(int firstLineIndex);
 
-private:
-
     Line lines[linesCount];
 };
 

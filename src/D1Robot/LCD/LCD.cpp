@@ -17,10 +17,13 @@ void LCD::Init()
     liquidCrystal.clear();
 }
 
-void LCD::Display(String lines[2])
+void LCD::Display(String lines[2], bool lineIsEdited)
 {
+    static char mode;
+    mode = lineIsEdited ? '*' : '>';
+    
     liquidCrystal.clear();
-    liquidCrystal.print(">");
+    liquidCrystal.print(mode);
     liquidCrystal.print(lines[0]);
     liquidCrystal.setCursor(1, 1);
     liquidCrystal.print(lines[1]);

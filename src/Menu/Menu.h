@@ -27,16 +27,21 @@ public:
     String* GetActiveCategory();
     void HandlePressedButton(analogKey categoryNumber);
 
+    Category categories[categoriesCount];
+    uint8_t activeCategory;
+    uint8_t activeLine;
+    bool lineIsEdited;
+    
 private:
     void SetPreviousLine();
     void SetNextLine();
     void SetPreviousCategory();
     void SetNextCategory();
+    void HandleUpKey();
+    void HandleDownKey();
+    void HandleLeftKey();
+    void HandleRightKey();
     void HandleSelection();
-
-    Category categories[categoriesCount];
-    uint8_t activeCategory;
-    uint8_t activeLine;
 };
 
 #endif

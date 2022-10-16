@@ -13,7 +13,7 @@ public:
     ~LCD();
 
     void Init();
-    void Display(String lines[2]);
+    void Display(String lines[2], bool lineIsEdited);
 
 private:
     LiquidCrystal liquidCrystal;

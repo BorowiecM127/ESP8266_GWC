@@ -13,7 +13,7 @@ public:
     ~D1Robot();
 
     void Init();
-    void UpdateScreen(String lines[2]);
+    void UpdateScreen(String lines[2], bool lineIsEdited);
     analogKey ReadAnalogButton();
 
 private:

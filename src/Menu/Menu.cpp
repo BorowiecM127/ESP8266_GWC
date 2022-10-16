@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu()
+Menu::Menu(): lineIsEdited(false)
 {
 
 }
@@ -63,24 +63,80 @@ void Menu::HandlePressedButton(analogKey pressedKey)
     switch (pressedKey)
     {
         case upKey:
-            SetPreviousLine();
+            HandleUpKey();
             break;
         case downKey:
-            SetNextLine();
+            HandleDownKey();
             break;
         case leftKey:
-            SetPreviousCategory();
+            HandleLeftKey();
             break;
         case rightKey:
-            activeLine = 0;
-            SetNextCategory();
+            HandleRightKey();
             break;
         case selectKey:
-            activeLine = 0;
             HandleSelection();
             break;
         default:
             break;
+    }
+}
+
+void Menu::HandleUpKey()
+{
+    if (lineIsEdited)
+    {
+        categories[activeCategory].lines[activeLine].value += 0.1;
+    }
+    else
+    {
+        SetPreviousLine();
+    }
+}
+
+void Menu::HandleDownKey()
+{
+    if (lineIsEdited)
+    {
+        categories[activeCategory].lines[activeLine].value -= 0.1;
+    }
+    else
+    {
+        SetNextLine();
+    }
+}
+
+void Menu::HandleLeftKey()
+{
+    if (lineIsEdited)
+    {
+        categories[activeCategory].lines[activeLine].value -= 1.0;
+    }
+    else
+    {
+        activeLine = 0;
+        SetPreviousCategory();
+    }
+}
+
+void Menu::HandleRightKey()
+{
+    if (lineIsEdited)
+    {
+        categories[activeCategory].lines[activeLine].value += 1.0;
+    }
+    else
+    {
+        activeLine = 0;
+        SetNextCategory();
+    }
+}
+
+void Menu::HandleSelection()
+{
+    if (categories[activeCategory].lines[activeLine].editable)
+    {
+        lineIsEdited = !lineIsEdited;
     }
 }
 
@@ -102,9 +158,4 @@ void Menu::SetPreviousCategory()
 void Menu::SetNextCategory()
 {
     activeCategory = (activeCategory + 1) % categoriesCount;
-}
-
-void Menu::HandleSelection()
-{
-
 }

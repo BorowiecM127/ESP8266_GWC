@@ -18,7 +18,7 @@ void setup()
 
 void loop()
 {
-    keypadShield.UpdateScreen(menu.GetActiveCategory());
+    keypadShield.UpdateScreen(menu.GetActiveCategory(), menu.lineIsEdited);
     menu.HandlePressedButton(keypadShield.ReadAnalogButton());
 
     delay(200);
