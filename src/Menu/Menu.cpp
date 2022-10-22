@@ -82,11 +82,31 @@ void Menu::HandlePressedButton(analogKey pressedKey)
     }
 }
 
+void Menu::SetPreviousLine()
+{
+    activeLine = abs((activeLine - 1) % linesCount);
+}
+
+void Menu::SetNextLine()
+{
+    activeLine = (activeLine + 1) % linesCount;
+}
+
+void Menu::SetPreviousCategory()
+{
+    activeCategory = abs((activeCategory - 1) % categoriesCount);
+}
+
+void Menu::SetNextCategory()
+{
+    activeCategory = (activeCategory + 1) % categoriesCount;
+}
+
 void Menu::HandleUpKey()
 {
     if (lineIsEdited)
     {
-        categories[activeCategory].lines[activeLine].value += 0.1;
+        categories[activeCategory].lines[activeLine].value += 0.5;
     }
     else
     {
@@ -98,7 +118,7 @@ void Menu::HandleDownKey()
 {
     if (lineIsEdited)
     {
-        categories[activeCategory].lines[activeLine].value -= 0.1;
+        categories[activeCategory].lines[activeLine].value -= 0.5;
     }
     else
     {
@@ -140,22 +160,30 @@ void Menu::HandleSelection()
     }
 }
 
-void Menu::SetPreviousLine()
+void Menu::UpdateSensorTemperatures(DS18B20 *sensors, uint8_t refreshDivider)
 {
-    activeLine = abs((activeLine - 1) % linesCount);
+    if (loopCounter % refreshDivider == 0)
+    {
+        loopCounter = 0;
+        ReadAllTemperatures(sensors);
+    }
+
+    ++loopCounter;
 }
 
-void Menu::SetNextLine()
+void Menu::ReadAllTemperatures(DS18B20 *sensors)
 {
-    activeLine = (activeLine + 1) % linesCount;
-}
+    uint8_t temperatureSensorCount = 0;
 
-void Menu::SetPreviousCategory()
-{
-    activeCategory = abs((activeCategory - 1) % categoriesCount);
-}
-
-void Menu::SetNextCategory()
-{
-    activeCategory = (activeCategory + 1) % categoriesCount;
+    for (uint8_t i = 0; i < categoriesCount; ++i)
+    {
+        for (uint8_t j = 0; j < linesCount; ++j)
+        {
+            if (!categories[i].lines[j].editable)
+            {
+                categories[i].lines[j].value = sensors->getTemperature(temperatureSensorCount);
+                ++temperatureSensorCount;
+            }
+        }
+    }
 }

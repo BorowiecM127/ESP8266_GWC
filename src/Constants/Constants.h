@@ -8,7 +8,7 @@
 #include <Arduino.h>
 
 // KEYPAD SHIELD CONSTANTS
-const uint8_t LCDPins[6] = {D1, D2, D4, D5, D6, D7};
+const uint8_t LCDPins[6] = {D0, D1, D2, D5, D6, D7};
 const uint8_t analogPin = A0;
 
 enum analogKey {
@@ -19,6 +19,10 @@ enum analogKey {
     upKey = 4,
     rightKey = 5
 };
+
+// DS18B20 CONSTANTS
+const uint8_t oneWirePin = D4;
+const int refreshDivider = 4;
 
 //  MENU CONSTANTS
 const uint8_t categoriesCount = 3;
@@ -44,5 +48,9 @@ const bool defaultEditables[categoriesCount][linesCount] = {
     {true, true},
     {true, true}
 };
+
+//MAIN CONSTANTS
+const uint16_t serialBaudRate = 9600;
+const uint16_t loopDelayMs = 200;
 
 #endif

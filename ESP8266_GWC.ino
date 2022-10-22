@@ -3,23 +3,24 @@
 #include "src/DS18B20/DS18B20.h"
 #include "src/Constants/Constants.h"
 
-String LCDLines[2];
 Menu menu;
 D1Robot keypadShield;
-DS18B20 temperatures[2];
+DS18B20 temperatureSensors;
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(serialBaudRate);
 
     menu.Init();
     keypadShield.Init();
+    temperatureSensors.begin();
 }
 
 void loop()
 {
+    menu.UpdateSensorTemperatures(&temperatureSensors, refreshDivider);
     keypadShield.UpdateScreen(menu.GetActiveCategory(), menu.lineIsEdited);
     menu.HandlePressedButton(keypadShield.ReadAnalogButton());
 
-    delay(200);
+    delay(loopDelayMs);
 }

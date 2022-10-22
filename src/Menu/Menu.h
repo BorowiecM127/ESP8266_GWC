@@ -6,6 +6,7 @@
 #include "Category/Category.h"
 #include "../Constants/Constants.h"
 #include "../Pair/Pair.h"
+#include "../DS18B20/DS18B20.h"
 
 class Menu
 {
@@ -27,6 +28,8 @@ public:
     String* GetActiveCategory();
     void HandlePressedButton(analogKey categoryNumber);
 
+    void UpdateSensorTemperatures(DS18B20 *sensors, uint8_t refreshDivider);
+
     Category categories[categoriesCount];
     uint8_t activeCategory;
     uint8_t activeLine;
@@ -37,11 +40,16 @@ private:
     void SetNextLine();
     void SetPreviousCategory();
     void SetNextCategory();
+
     void HandleUpKey();
     void HandleDownKey();
     void HandleLeftKey();
     void HandleRightKey();
     void HandleSelection();
+
+    void ReadAllTemperatures(DS18B20 *sensors);
+
+    uint8_t loopCounter = 0;
 };
 
 #endif
