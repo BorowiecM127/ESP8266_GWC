@@ -10,18 +10,18 @@ D1Robot::~D1Robot()
 
 }
 
-void D1Robot::Init()
+void D1Robot::begin()
 {
-    screen.Init();
-    button.Init();
+    screen.begin();
+    button.begin();
 }
 
-void D1Robot::UpdateScreen(String lines[2], bool lineIsEdited)
+void D1Robot::updateScreen(String lines[2], bool lineIsEdited)
 {
-    screen.Display(lines, lineIsEdited);
+    screen.display(lines, lineIsEdited);
 }
 
-analogKey D1Robot::ReadAnalogButton()
+analogKey D1Robot::readAnalogButton()
 {
-    return button.ReadKey();
+    return button.readKey();
 }

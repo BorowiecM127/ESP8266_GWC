@@ -10,12 +10,12 @@ AnalogButton::~AnalogButton()
 
 }
 
-void AnalogButton::Init()
+void AnalogButton::begin()
 {
     keyPin = analogPin;
 }
 
-analogKey AnalogButton::ReadKey()
+analogKey AnalogButton::readKey()
 {
     int buttonValue = analogRead(keyPin);
 

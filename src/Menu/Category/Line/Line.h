@@ -11,8 +11,19 @@ public:
     Line();
     ~Line();
 
-    String GetLine();
+    String getFormattedLine();
+    void incrementValue(float increment);
+    void decrementValue(float decrement);
+    bool isEditable();
 
+    String getTitle();
+    void setTitle(String title);
+    float getValue();
+    void setValue(float value);
+    bool getEditable();
+    void setEditable(bool editable);
+
+private:
     String title;
     float value;
     bool editable;

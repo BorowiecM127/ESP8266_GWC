@@ -11,8 +11,8 @@ public:
     AnalogButton();
     ~AnalogButton();
 
-    void Init();
-    analogKey ReadKey();
+    void begin();
+    analogKey readKey();
 
 private:
     uint8_t keyPin;

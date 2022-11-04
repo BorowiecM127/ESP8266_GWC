@@ -10,43 +10,43 @@ Category::~Category()
 
 }
 
-void Category::SetTemperatures(float temperatures[linesCount])
+void Category::setTemperatures(float temperatures[linesCount])
 {
     for (int i = 0; i < linesCount; ++i)
-        lines[i].value = temperatures[i];
+        lines[i].setValue(temperatures[i]);
 }
 
-void Category::SetTemperatures(const float temperatures[linesCount])
+void Category::setTemperatures(const float temperatures[linesCount])
 {
     for (int i = 0; i < linesCount; ++i)
-        lines[i].value = temperatures[i];
+        lines[i].setValue(temperatures[i]);
 }
 
-void Category::SetTitles(String titles[linesCount])
+void Category::setTitles(String titles[linesCount])
 {
     for (int i = 0; i < linesCount; ++i)
-        lines[i].title = titles[i];
+        lines[i].setTitle(titles[i]);
 }
 
-void Category::SetTitles(const String titles[linesCount])
+void Category::setTitles(const String titles[linesCount])
 {
     for (int i = 0; i < linesCount; ++i)
-        lines[i].title = titles[i];
+        lines[i].setTitle(titles[i]);
 }
 
-void Category::SetEditables(bool editables[linesCount])
+void Category::setEditables(bool editables[linesCount])
 {
     for (int i = 0; i < linesCount; ++i)
-        lines[i].editable = editables[i];
+        lines[i].setEditable(editables[i]);
 }
 
-void Category::SetEditables(const bool editables[linesCount])
+void Category::setEditables(const bool editables[linesCount])
 {
     for (int i = 0; i < linesCount; ++i)
-        lines[i].editable = editables[i];
+        lines[i].setEditable(editables[i]);
 }
 
-String *Category::GetLines(int firstLineIndex)
+String *Category::getFormattedLines(int firstLineIndex)
 {
     if (firstLineIndex < linesCount)
     {
@@ -54,13 +54,60 @@ String *Category::GetLines(int firstLineIndex)
 
         for (int i = firstLineIndex; i < (firstLineIndex + linesCount); ++i)
         {
-            outputLines[i - firstLineIndex] = lines[i % linesCount].GetLine();
+            outputLines[i - firstLineIndex] = lines[i % linesCount].getFormattedLine();
         }
 
         return outputLines;
     }
-    else
+}
+
+void Category::incrementLineValue(uint8_t index, float value)
+{
+    if (index > 0 && index < linesCount)
     {
-        // throw exception
+        lines[index].incrementValue(value);
     }
+}
+
+void Category::decrementLineValue(uint8_t index, float value)
+{
+    if (index > 0 && index < linesCount)
+    {
+        lines[index].decrementValue(value);
+    }
+}
+
+bool Category::lineIsEditable(uint8_t index)
+{
+    return this->lines[index].isEditable();
+}
+
+String Category::getLineTitle(uint8_t index)
+{
+    return this->lines[index].getTitle();
+}
+
+void Category::setLineTitle(uint8_t index, String title)
+{
+    this->lines[index].setTitle(title);
+}
+
+float Category::getLineValue(uint8_t index)
+{
+    return this->lines[index].getValue();
+}
+
+void Category::setLineValue(uint8_t index, float value)
+{
+    this->lines[index].setValue(value);
+}
+
+bool Category::getLineEditable(uint8_t index)
+{
+    return this->lines[index].getEditable();
+}
+
+void Category::setLineEditable(uint8_t index, bool editable)
+{
+    this->lines[index].setEditable(editable);
 }

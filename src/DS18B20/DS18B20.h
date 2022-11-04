@@ -16,7 +16,7 @@ public:
     void begin();
     void discoverDevices();
     float getTemperature(uint8_t deviceIndex);
-    uint8_t GetDevicesCount();
+    uint8_t getDevicesCount();
 
 private:
     void printDevicesNumber();

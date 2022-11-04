@@ -10,168 +10,173 @@ Menu::~Menu()
 
 }
 
-void Menu::Init()
+void Menu::begin()
 {
-    SetTemperatures(defaultTemperatures);
-    SetTitles(defaultTitles);
-    SetEditables(defaultEditables);
+    setTemperatures(defaultTemperatures);
+    setTitles(defaultTitles);
+    setEditables(defaultEditables);
 }
 
-void Menu::SetTemperatures(float temperatures[categoriesCount][linesCount])
-{
-    for (int i = 0; i < categoriesCount; ++i)
-        categories[i].SetTemperatures(temperatures[i]);
-}
-
-void Menu::SetTemperatures(const float temperatures[categoriesCount][linesCount])
+void Menu::setTemperatures(float temperatures[categoriesCount][linesCount])
 {
     for (int i = 0; i < categoriesCount; ++i)
-        categories[i].SetTemperatures(temperatures[i]);
+        categories[i].setTemperatures(temperatures[i]);
 }
 
-void Menu::SetTitles(String titles[categoriesCount][linesCount])
+void Menu::setTemperatures(const float temperatures[categoriesCount][linesCount])
 {
     for (int i = 0; i < categoriesCount; ++i)
-        categories[i].SetTitles(titles[i]);
+        categories[i].setTemperatures(temperatures[i]);
 }
 
-void Menu::SetTitles(const String titles[categoriesCount][linesCount])
+void Menu::setTitles(String titles[categoriesCount][linesCount])
 {
     for (int i = 0; i < categoriesCount; ++i)
-        categories[i].SetTitles(titles[i]);
+        categories[i].setTitles(titles[i]);
 }
 
-void Menu::SetEditables(bool editables[categoriesCount][linesCount])
+void Menu::setTitles(const String titles[categoriesCount][linesCount])
 {
     for (int i = 0; i < categoriesCount; ++i)
-        categories[i].SetEditables(editables[i]);
+        categories[i].setTitles(titles[i]);
 }
 
-void Menu::SetEditables(const bool editables[categoriesCount][linesCount])
+void Menu::setEditables(bool editables[categoriesCount][linesCount])
 {
     for (int i = 0; i < categoriesCount; ++i)
-        categories[i].SetEditables(editables[i]);
+        categories[i].setEditables(editables[i]);
 }
 
-String *Menu::GetActiveCategory()
+void Menu::setEditables(const bool editables[categoriesCount][linesCount])
 {
-    return categories[activeCategory].GetLines(activeLine);
+    for (int i = 0; i < categoriesCount; ++i)
+        categories[i].setEditables(editables[i]);
 }
 
-void Menu::HandlePressedButton(analogKey pressedKey)
+String *Menu::getActiveCategory()
+{
+    return categories[activeCategory].getFormattedLines(activeLine);
+}
+
+bool Menu::getLineIsEdited()
+{
+    return lineIsEdited;
+}
+
+void Menu::handlePressedButton(analogKey pressedKey)
 {
     switch (pressedKey)
     {
         case upKey:
-            HandleUpKey();
+            handleUpKey();
             break;
         case downKey:
-            HandleDownKey();
+            handleDownKey();
             break;
         case leftKey:
-            HandleLeftKey();
+            handleLeftKey();
             break;
         case rightKey:
-            HandleRightKey();
+            handleRightKey();
             break;
         case selectKey:
-            HandleSelection();
+            handleSelection();
             break;
         default:
             break;
     }
 }
 
-void Menu::SetPreviousLine()
+void Menu::setPreviousLine()
 {
     activeLine = abs((activeLine - 1) % linesCount);
 }
 
-void Menu::SetNextLine()
+void Menu::setNextLine()
 {
     activeLine = (activeLine + 1) % linesCount;
 }
 
-void Menu::SetPreviousCategory()
+void Menu::setPreviousCategory()
 {
     activeCategory = abs((activeCategory - 1) % categoriesCount);
 }
 
-void Menu::SetNextCategory()
+void Menu::setNextCategory()
 {
     activeCategory = (activeCategory + 1) % categoriesCount;
 }
 
-void Menu::HandleUpKey()
+void Menu::handleUpKey()
 {
     if (lineIsEdited)
     {
-        categories[activeCategory].lines[activeLine].value += 0.5;
+        categories[activeCategory].incrementLineValue(activeLine, fineModifierValue);
     }
     else
     {
-        SetPreviousLine();
+        setPreviousLine();
     }
 }
 
-void Menu::HandleDownKey()
+void Menu::handleDownKey()
 {
     if (lineIsEdited)
     {
-        categories[activeCategory].lines[activeLine].value -= 0.5;
+        categories[activeCategory].decrementLineValue(activeLine, fineModifierValue);
     }
     else
     {
-        SetNextLine();
+        setNextLine();
     }
 }
 
-void Menu::HandleLeftKey()
+void Menu::handleLeftKey()
 {
     if (lineIsEdited)
     {
-        categories[activeCategory].lines[activeLine].value -= 1.0;
-    }
-    else
-    {
-        activeLine = 0;
-        SetPreviousCategory();
-    }
-}
-
-void Menu::HandleRightKey()
-{
-    if (lineIsEdited)
-    {
-        categories[activeCategory].lines[activeLine].value += 1.0;
+        categories[activeCategory].decrementLineValue(activeLine, coarseModifierValue);
     }
     else
     {
         activeLine = 0;
-        SetNextCategory();
+        setPreviousCategory();
     }
 }
 
-void Menu::HandleSelection()
+void Menu::handleRightKey()
 {
-    if (categories[activeCategory].lines[activeLine].editable)
+    if (lineIsEdited)
+    {
+        categories[activeCategory].incrementLineValue(activeLine, coarseModifierValue);
+    }
+    else
+    {
+        activeLine = 0;
+        setNextCategory();
+    }
+}
+
+void Menu::handleSelection()
+{
+    if (categories[activeCategory].lineIsEditable(activeLine))
     {
         lineIsEdited = !lineIsEdited;
     }
 }
 
-void Menu::UpdateSensorTemperatures(DS18B20 *sensors, uint8_t refreshDivider)
+void Menu::updateSensorTemperatures(DS18B20 *sensors, uint8_t refreshDivider)
 {
     if (loopCounter % refreshDivider == 0)
     {
         loopCounter = 0;
-        ReadAllTemperatures(sensors);
+        readAllTemperatures(sensors);
     }
 
     ++loopCounter;
 }
 
-void Menu::ReadAllTemperatures(DS18B20 *sensors)
+void Menu::readAllTemperatures(DS18B20 *sensors)
 {
     uint8_t temperatureSensorCount = 0;
 
@@ -179,9 +184,9 @@ void Menu::ReadAllTemperatures(DS18B20 *sensors)
     {
         for (uint8_t j = 0; j < linesCount; ++j)
         {
-            if (!categories[i].lines[j].editable)
+            if (!categories[i].lineIsEditable(j))
             {
-                categories[i].lines[j].value = sensors->getTemperature(temperatureSensorCount);
+                categories[i].setLineValue(j, sensors->getTemperature(temperatureSensorCount));
                 ++temperatureSensorCount;
             }
         }

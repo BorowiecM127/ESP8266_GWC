@@ -27,6 +27,8 @@ const int refreshDivider = 4;
 //  MENU CONSTANTS
 const uint8_t categoriesCount = 3;
 const uint8_t linesCount = 2;
+const float coarseModifierValue = 1.0;
+const float fineModifierValue = 0.5;
 
 const float defaultTemperatures[categoriesCount][linesCount] = {
     {15.0, 20.0},

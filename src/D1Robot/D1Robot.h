@@ -12,9 +12,9 @@ public:
     D1Robot();
     ~D1Robot();
 
-    void Init();
-    void UpdateScreen(String lines[2], bool lineIsEdited);
-    analogKey ReadAnalogButton();
+    void begin();
+    void updateScreen(String lines[2], bool lineIsEdited);
+    analogKey readAnalogButton();
 
 private:
     LCD screen;

@@ -14,41 +14,41 @@ public:
     Menu();
     ~Menu();
 
-    void Init();
+    void begin();
 
-    void SetTemperatures(float temperatures[categoriesCount][linesCount]);
-    void SetTemperatures(const float temperatures[categoriesCount][linesCount]);
+    void setTemperatures(float temperatures[categoriesCount][linesCount]);
+    void setTemperatures(const float temperatures[categoriesCount][linesCount]);
 
-    void SetTitles(String titles[categoriesCount][linesCount]);
-    void SetTitles(const String titles[categoriesCount][linesCount]);
+    void setTitles(String titles[categoriesCount][linesCount]);
+    void setTitles(const String titles[categoriesCount][linesCount]);
 
-    void SetEditables(bool editables[categoriesCount][linesCount]);
-    void SetEditables(const bool editables[categoriesCount][linesCount]);
+    void setEditables(bool editables[categoriesCount][linesCount]);
+    void setEditables(const bool editables[categoriesCount][linesCount]);
     
-    String* GetActiveCategory();
-    void HandlePressedButton(analogKey categoryNumber);
+    String* getActiveCategory();
+    bool getLineIsEdited();
 
-    void UpdateSensorTemperatures(DS18B20 *sensors, uint8_t refreshDivider);
+    void handlePressedButton(analogKey categoryNumber);
+    void updateSensorTemperatures(DS18B20 *sensors, uint8_t refreshDivider);
+    
+private:
+    void setPreviousLine();
+    void setNextLine();
+    void setPreviousCategory();
+    void setNextCategory();
+
+    void handleUpKey();
+    void handleDownKey();
+    void handleLeftKey();
+    void handleRightKey();
+    void handleSelection();
+
+    void readAllTemperatures(DS18B20 *sensors);
 
     Category categories[categoriesCount];
     uint8_t activeCategory;
     uint8_t activeLine;
     bool lineIsEdited;
-    
-private:
-    void SetPreviousLine();
-    void SetNextLine();
-    void SetPreviousCategory();
-    void SetNextCategory();
-
-    void HandleUpKey();
-    void HandleDownKey();
-    void HandleLeftKey();
-    void HandleRightKey();
-    void HandleSelection();
-
-    void ReadAllTemperatures(DS18B20 *sensors);
-
     uint8_t loopCounter = 0;
 };
 

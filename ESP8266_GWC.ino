@@ -11,16 +11,16 @@ void setup()
 {
     Serial.begin(serialBaudRate);
 
-    menu.Init();
-    keypadShield.Init();
+    menu.begin();
+    keypadShield.begin();
     temperatureSensors.begin();
 }
 
 void loop()
 {
-    menu.UpdateSensorTemperatures(&temperatureSensors, refreshDivider);
-    keypadShield.UpdateScreen(menu.GetActiveCategory(), menu.lineIsEdited);
-    menu.HandlePressedButton(keypadShield.ReadAnalogButton());
+    menu.updateSensorTemperatures(&temperatureSensors, refreshDivider);
+    keypadShield.updateScreen(menu.getActiveCategory(), menu.getLineIsEdited());
+    menu.handlePressedButton(keypadShield.readAnalogButton());
 
     delay(loopDelayMs);
 }

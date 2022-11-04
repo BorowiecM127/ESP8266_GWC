@@ -81,7 +81,7 @@ float DS18B20::getTemperature(uint8_t deviceIndex)
     }
 }
 
-uint8_t DS18B20::GetDevicesCount()
+uint8_t DS18B20::getDevicesCount()
 {
     return devicesCount;
 }

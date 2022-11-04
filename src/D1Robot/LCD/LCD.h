@@ -12,8 +12,8 @@ public:
     LCD();
     ~LCD();
 
-    void Init();
-    void Display(String lines[2], bool lineIsEdited);
+    void begin();
+    void display(String lines[2], bool lineIsEdited);
 
 private:
     LiquidCrystal liquidCrystal;

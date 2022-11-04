@@ -10,14 +10,14 @@ LCD::~LCD()
 
 }
 
-void LCD::Init()
+void LCD::begin()
 {
     liquidCrystal = LiquidCrystal(LCDPins[0], LCDPins[1], LCDPins[2], LCDPins[3], LCDPins[4], LCDPins[5]);
     liquidCrystal.begin(16, 2);
     liquidCrystal.clear();
 }
 
-void LCD::Display(String lines[2], bool lineIsEdited)
+void LCD::display(String lines[2], bool lineIsEdited)
 {
     static char mode;
     mode = lineIsEdited ? '*' : '>';
