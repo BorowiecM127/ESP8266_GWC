@@ -1,13 +1,33 @@
 #include "DS18B20.h"
 
 DS18B20::DS18B20()
-{
-
-}
+{}
 
 DS18B20::~DS18B20()
-{
+{}
 
+DS18B20::DS18B20(const DS18B20 &temperatureSensors)
+: oneWire(temperatureSensors.oneWire),
+sensors(temperatureSensors.sensors),
+devicesCount(temperatureSensors.devicesCount)
+{
+    for(uint8_t i = 0; i < 8; ++i)
+        this->tempDeviceAddress[i] = temperatureSensors.tempDeviceAddress[i];
+}
+
+DS18B20 &DS18B20::operator=(const DS18B20 &temperatureSensors)
+{
+    if (&temperatureSensors != this)
+    {
+        this->oneWire = temperatureSensors.oneWire;
+        this->sensors = temperatureSensors.sensors;
+        this->devicesCount = temperatureSensors.devicesCount;
+
+        for(uint8_t i = 0; i < 8; ++i)
+            this->tempDeviceAddress[i] = temperatureSensors.tempDeviceAddress[i];
+    }
+
+    return *this;
 }
 
 void DS18B20::begin()

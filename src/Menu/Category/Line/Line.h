@@ -10,6 +10,8 @@ class Line
 public:
     Line();
     ~Line();
+    Line(Line const &line);
+    Line &operator=(Line const &line);
 
     String getFormattedLine();
     void incrementValue(float increment);

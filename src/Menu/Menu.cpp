@@ -1,13 +1,40 @@
 #include "Menu.h"
 
-Menu::Menu(): lineIsEdited(false)
-{
-
-}
+Menu::Menu()
+: activeCategory(0),
+activeLine(0),
+lineIsEdited(false),
+loopCounter(0),
+categories()
+{}
 
 Menu::~Menu()
-{
+{}
 
+Menu::Menu(const Menu &menu)
+: activeCategory(menu.activeCategory),
+activeLine(menu.activeLine),
+lineIsEdited(menu.lineIsEdited),
+loopCounter(menu.loopCounter)
+{
+    for(int i = 0; i < categoriesCount; ++i)
+        this->categories[i] = menu.categories[i];
+}
+
+Menu &Menu::operator=(const Menu &menu)
+{
+    if (&menu != this)
+    {
+        for(int i = 0; i < categoriesCount; ++i)
+        this->categories[i] = menu.categories[i];
+
+        this->activeCategory = menu.activeCategory;
+        this->activeLine = menu.activeLine;
+        this->lineIsEdited = menu.lineIsEdited;
+        this->loopCounter = menu.loopCounter;
+    }
+
+    return *this;
 }
 
 void Menu::begin()

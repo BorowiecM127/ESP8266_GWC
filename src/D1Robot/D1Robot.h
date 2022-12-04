@@ -11,6 +11,8 @@ class D1Robot
 public:
     D1Robot();
     ~D1Robot();
+    D1Robot(const D1Robot &keypadShield);
+    D1Robot &operator=(const D1Robot &keypadShield);
 
     void begin();
     void updateScreen(String lines[2], bool lineIsEdited);

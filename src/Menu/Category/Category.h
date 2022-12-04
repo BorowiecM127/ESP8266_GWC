@@ -11,6 +11,8 @@ class Category
 public:
     Category();
     ~Category();
+    Category(const Category &category);
+    Category &operator=(const Category &category);
 
     void setTemperatures(float temperatures[linesCount]);
     void setTemperatures(const float temperatures[linesCount]);

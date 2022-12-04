@@ -13,6 +13,8 @@ class Menu
 public:
     Menu();
     ~Menu();
+    Menu(const Menu &menu);
+    Menu& operator=(const Menu &menu);
 
     void begin();
 
@@ -27,6 +29,13 @@ public:
     
     String* getActiveCategory();
     bool getLineIsEdited();
+
+    float getTemperatureInside() {return this->categories[0].getLineValue(0);}
+    float getTemperatureOutside() {return this->categories[0].getLineValue(1);}
+    float getWakeUpTemperatureLow() {return this->categories[1].getLineValue(0);}
+    float getWakeUpTemperatureHigh() {return this->categories[1].getLineValue(1);}
+    float getDeltaTemperatureLow() {return this->categories[2].getLineValue(0);}
+    float getDeltaTemperatureHigh() {return this->categories[2].getLineValue(1);}
 
     void handlePressedButton(analogKey categoryNumber);
     void updateSensorTemperatures(DS18B20 *sensors, uint8_t refreshDivider);
@@ -49,7 +58,7 @@ private:
     uint8_t activeCategory;
     uint8_t activeLine;
     bool lineIsEdited;
-    uint8_t loopCounter = 0;
+    uint8_t loopCounter;
 };
 
 #endif

@@ -11,6 +11,8 @@ class LCD
 public:
     LCD();
     ~LCD();
+    LCD(const LCD &screen);
+    LCD &operator=(const LCD &screen);
 
     void begin();
     void display(String lines[2], bool lineIsEdited);

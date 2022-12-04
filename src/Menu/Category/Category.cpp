@@ -1,13 +1,25 @@
 #include "Category.h"
 
 Category::Category()
-{
-
-}
+: lines()
+{}
 
 Category::~Category()
-{
+{}
 
+Category::Category(const Category &category)
+{
+    for (int i = 0; i < linesCount; ++i)
+        this->lines[i] = category.lines[i];
+}
+
+Category &Category::operator=(const Category &category)
+{
+    if (&category != this)
+        for (int i = 0; i < linesCount; ++i)
+            this->lines[i] = category.lines[i];
+
+    return *this;
 }
 
 void Category::setTemperatures(float temperatures[linesCount])

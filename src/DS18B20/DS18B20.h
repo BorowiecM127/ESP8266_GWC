@@ -12,6 +12,8 @@ class DS18B20
 public:
     DS18B20();
     ~DS18B20();
+    DS18B20(const DS18B20 &temperatureSensors);
+    DS18B20 &operator=(const DS18B20 &temperatureSensors);
 
     void begin();
     void discoverDevices();

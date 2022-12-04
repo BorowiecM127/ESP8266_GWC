@@ -1,13 +1,22 @@
 #include "LCD.h"
 
-LCD::LCD(): liquidCrystal(NULL, NULL, NULL, NULL, NULL, NULL)
-{
-
-}
+LCD::LCD()
+: liquidCrystal(NULL, NULL, NULL, NULL, NULL, NULL)
+{}
 
 LCD::~LCD()
-{
+{}
 
+LCD::LCD(const LCD &screen)
+: liquidCrystal(screen.liquidCrystal)
+{}
+
+LCD &LCD::operator=(const LCD &screen)
+{
+    if (&screen != this)
+        this->liquidCrystal = screen.liquidCrystal;
+    
+    return *this;
 }
 
 void LCD::begin()

@@ -10,6 +10,8 @@ class AnalogButton
 public:
     AnalogButton();
     ~AnalogButton();
+    AnalogButton(const AnalogButton &analogButton);
+    AnalogButton &operator=(const AnalogButton &analogButton);
 
     void begin();
     analogKey readKey();

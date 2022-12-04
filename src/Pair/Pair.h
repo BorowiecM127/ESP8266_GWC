@@ -10,11 +10,11 @@ public:
     Pair();
     Pair(T, U);
     ~Pair();
+    Pair(const Pair &pair);
+    Pair &operator=(const Pair &pair);
 
     T first;
     T second;
-
-private:
 };
 
 #include "Pair.cpp"

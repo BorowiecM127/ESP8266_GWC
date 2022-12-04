@@ -1,13 +1,30 @@
 #include "Line.h"
 
 Line::Line()
-{
-
-}
+: editable(false),
+title(""),
+value(0.0)
+{}
 
 Line::~Line()
-{
+{}
 
+Line::Line(const Line &line)
+: editable(line.editable),
+title(line.title),
+value(line.value)
+{}
+
+Line &Line::operator=(const Line &line)
+{
+    if (&line != this)
+    {
+        this->editable = line.editable;
+        this->title = line.title;
+        this->value = line.value;
+    }
+    
+    return *this;
 }
 
 String Line::getFormattedLine()

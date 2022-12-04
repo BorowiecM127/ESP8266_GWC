@@ -1,13 +1,21 @@
 #include "AnalogButton.h"
 
 AnalogButton::AnalogButton()
-{
-
-}
+{}
 
 AnalogButton::~AnalogButton()
-{
+{}
 
+AnalogButton::AnalogButton(const AnalogButton &analogButton)
+:keyPin(analogButton.keyPin)
+{}
+
+AnalogButton &AnalogButton::operator=(const AnalogButton &analogButton)
+{
+    if (&analogButton != this)
+        this->keyPin = analogButton.keyPin;
+    
+    return *this;
 }
 
 void AnalogButton::begin()
